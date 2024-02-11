@@ -1,0 +1,25 @@
+.container {
+}
+
+.container form {
+}
+
+.contianer form button[type="submit"] {
+}
+
+.container .search-container {
+}
+
+.container .search-container input[type="text"] {
+}
+
+.container .search-container .search-results {
+}
+
+.container .search-container .search-results2 {
+  display: none;
+}
+
+.container .search-container .search-results2.visible {
+  display: block;
+}
