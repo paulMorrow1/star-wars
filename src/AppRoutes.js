@@ -9,11 +9,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route
-          index
-          path="search-autocomplete"
-          element={<SearchAutocomplete />}
-        />
+        <Route index path="/" element={<SearchAutocomplete />} />
         <Route path="statistics" element={<Stastics />} />
       </Route>
     </Routes>
