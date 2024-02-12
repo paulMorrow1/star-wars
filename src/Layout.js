@@ -3,9 +3,8 @@ import "./Layout.css";
 
 export default function Layout() {
   return (
-    <div>
-      <nav>
-        <Link to="/">Button Change</Link>
+    <div className="links-container">
+      <nav className="links">
         <Link to="/search-autocomplete">Search Autcomplete</Link>
         <Link to="/statistics">Stastics</Link>
       </nav>
