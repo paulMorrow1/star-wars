@@ -48,8 +48,13 @@ export default function SearchAutocomplete() {
 
   const onSearchHandler = async ({ target }) => {
     setSearch(target.value);
-    if (target.value !== "") setShowAutocompleteResults(true);
-    // if (target.value === "") return setAutocompleteResults([]);
+
+    if (target.value !== "") {
+      setShowAutocompleteResults(true);
+    } else {
+      setShowAutocompleteResults(false);
+    }
+    if (target.value === "") return setAutocompleteResults([]);
 
     const response = await (
       await fetch(`${BASE_URL}/people?search=${target.value}`)
@@ -83,7 +88,7 @@ export default function SearchAutocomplete() {
               />
             </div>
           ) : null}
-          <div
+          {/* <div
             className={`search-results search-results2 ${
               autocompleteResults.length > 0 && showAutocompleteResults
                 ? "visible"
@@ -96,7 +101,7 @@ export default function SearchAutocomplete() {
               setSearch={setSearch}
               setShowAutocompleteResults={setShowAutocompleteResults}
             />
-          </div>
+          </div> */}
         </div>
         <button type="submit">Search</button>
       </form>

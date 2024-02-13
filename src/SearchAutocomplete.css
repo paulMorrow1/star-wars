@@ -1,5 +1,5 @@
 .container {
-  /* background-color: gainsboro; */
+  margin-top: 1rem;
 }
 
 .container form {
@@ -15,6 +15,7 @@
 }
 
 .container .search-container .search-results {
+  border: 2px solid black;
 }
 
 .container .search-container .search-results2 {

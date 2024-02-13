@@ -5,8 +5,17 @@ body {
 .links-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .links {
   display: flex;
+}
+
+.search-autocomplete-styling {
+  margin: 0rem 2rem;
+}
+
+.statistics-styling {
+  margin: 0rem 2rem;
 }
