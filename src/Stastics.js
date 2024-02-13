@@ -170,7 +170,7 @@ export default function Stastics() {
           {/* <div className="per-page-container">page dropdown</div> */}
         </>
       ) : (
-        <p>No data</p>
+        <p>Loading data</p>
       )}
     </div>
   );
