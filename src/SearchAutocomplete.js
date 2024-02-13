@@ -75,6 +75,7 @@ export default function SearchAutocomplete() {
             name="search"
             value={search}
             onChange={onSearchHandler}
+            autoComplete="off"
             // onFocus={() => setShowAutocompleteResults(true)}
             // onBlur={() => setShowAutocompleteResults(false)}
           />
