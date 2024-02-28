@@ -1,11 +1,15 @@
 .container {
   margin-top: 1rem;
+  text-align: center;
 }
 
 .container form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-.contianer form button[type="submit"] {
+.submit-btn {
 }
 
 .container .search-container {

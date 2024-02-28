@@ -9,7 +9,7 @@ function AutocompleteSearchResults(props) {
   // props.results
   // const { results = [] <- setting default value } = props;
   const { results, setPeople, setSearch, setShowAutocompleteResults } = props;
-  const onClickHandlerNameThisWhateverYouWant = async (person) => {
+  const onClickCharacterSelect = async (person) => {
     try {
       const response = await (
         await fetch(`${BASE_URL}/people?search=${person}`)
@@ -25,10 +25,7 @@ function AutocompleteSearchResults(props) {
     <>
       {results.map(({ name }) => {
         return (
-          <p
-            key={name}
-            onClick={() => onClickHandlerNameThisWhateverYouWant(name)}
-          >
+          <p key={name} onClick={() => onClickCharacterSelect(name)}>
             {name}
           </p>
         );
@@ -68,6 +65,7 @@ export default function SearchAutocomplete() {
   };
   return (
     <div className="container">
+      <p className="form-header">Enter a Star Wars character</p>
       <form onSubmit={onSubmitHandler}>
         <div className="search-container">
           <input
@@ -104,7 +102,9 @@ export default function SearchAutocomplete() {
             />
           </div> */}
         </div>
-        <button type="submit">Search</button>
+        {/* <button className="submit-btn" type="submit">
+          Search
+        </button> */}
       </form>
       {people.length > 0 ? <pre>{JSON.stringify(people, null, 2)}</pre> : null}
     </div>
