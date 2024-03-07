@@ -5,17 +5,72 @@ const BASE_URL = "https://swapi.dev/api";
 // AutocompleteSearchResults.js (separate file);
 // const AutocompleteSearchResults = () => {} <- another way to write component
 // function AutocompleteSearchResults({ results }) { <- destructure props directly in parameter
+
 function AutocompleteSearchResults(props) {
   // props.results
   // const { results = [] <- setting default value } = props;
   const { results, setPeople, setSearch, setShowAutocompleteResults } = props;
+  const generatePromise = (url, key) => {
+    return fetch(url)
+      .then((data) => data.json())
+      .then((data) => data[key]);
+  };
   const onClickCharacterSelect = async (person) => {
     try {
       const response = await (
         await fetch(`${BASE_URL}/people?search=${person}`)
       ).json();
+      // films = [], homeworld = '', species = [], starships = [], vehicles = []
+      const fieldObjArrays = Object.keys(response.results[0])
+        .filter((key) => {
+          if (
+            key === "films" ||
+            key === "homeworld" ||
+            key === "species" ||
+            key === "starships" ||
+            key === "vehicles"
+          ) {
+            return key;
+          }
+          return null;
+        })
+        .toSorted()
+        .reduce((accum, key) => {
+          accum[key] =
+            typeof response.results[0][key] === "string"
+              ? [response.results[0][key]]
+              : response.results[0][key];
+          return accum;
+        }, {});
+      // const fieldArrayArrays = Object.values(fieldObjArrays);
+      const fieldKeyArrays = Object.entries(fieldObjArrays);
+      const fieldObjValuesPromises = Object.entries(fieldObjArrays).reduce(
+        (accum, [key, urls]) => {
+          const aryPromises = urls.map((url) =>
+            generatePromise(url, key === "films" ? "title" : "name")
+          );
+          accum.push(...aryPromises);
+          return accum;
+        },
+        []
+      );
+      const values = await Promise.all(fieldObjValuesPromises);
+
+      let start = 0;
+      let end = 0;
+      const enhancedPayload = response.results.map((person) => {
+        return {
+          ...person,
+          ...fieldKeyArrays.reduce((accum, [key, value]) => {
+            start = end;
+            end = start + value.length;
+            accum[key] = values.slice(start, end);
+            return accum;
+          }, {}),
+        };
+      });
       setSearch(person);
-      setPeople(response.results);
+      setPeople(enhancedPayload);
       setShowAutocompleteResults(false);
     } catch (error) {
       console.log(error);
@@ -36,12 +91,10 @@ function AutocompleteSearchResults(props) {
 
 export default function SearchAutocomplete() {
   const [search, setSearch] = React.useState("");
-  const [searchResults, setSearchResults] = React.useState([]);
   const [autocompleteResults, setAutocompleteResults] = React.useState([]);
   const [showAutocompleteResults, setShowAutocompleteResults] =
     React.useState(false);
   const [people, setPeople] = React.useState([]);
-  console.log({ people });
 
   const onSearchHandler = async ({ target }) => {
     setSearch(target.value);
@@ -56,7 +109,6 @@ export default function SearchAutocomplete() {
     const response = await (
       await fetch(`${BASE_URL}/people?search=${target.value}`)
     ).json();
-    console.log({ response });
     setAutocompleteResults(response.results);
   };
 

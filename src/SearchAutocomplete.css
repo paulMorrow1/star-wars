@@ -22,6 +22,10 @@
   border: 2px solid black;
 }
 
+.container .search-container .search-results p {
+  cursor: pointer;
+}
+
 .container .search-container .search-results2 {
   display: none;
 }
