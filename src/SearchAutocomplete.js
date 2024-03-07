@@ -96,21 +96,24 @@ export default function SearchAutocomplete() {
     React.useState(false);
   const [people, setPeople] = React.useState([]);
 
-  const onSearchHandler = async ({ target }) => {
-    setSearch(target.value);
+  const onSearchHandler = ({ target }) => setSearch(target.value);
 
-    if (target.value !== "") {
-      setShowAutocompleteResults(true);
-    } else {
-      setShowAutocompleteResults(false);
-    }
-    if (target.value === "") return setAutocompleteResults([]);
+  React.useEffect(() => {
+    const searchDebounce = setTimeout(async () => {
+      if (search !== "") {
+        setShowAutocompleteResults(true);
+      } else {
+        setShowAutocompleteResults(false);
+      }
+      if (search === "") return setAutocompleteResults([]);
 
-    const response = await (
-      await fetch(`${BASE_URL}/people?search=${target.value}`)
-    ).json();
-    setAutocompleteResults(response.results);
-  };
+      const response = await (
+        await fetch(`${BASE_URL}/people?search=${search}`)
+      ).json();
+      setAutocompleteResults(response.results);
+    }, 800);
+    return () => clearTimeout(searchDebounce);
+  }, [search]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
