@@ -1,8 +1,7 @@
 import * as React from "react";
 import "./SearchAutocomplete.css";
 
-const BASE_URL = "https:/swapi.py4e.com/api";
-// const BASE_URL = "https://www.swapi.tech/api";
+const BASE_URL = "https://swapi.dev/api";
 // AutocompleteSearchResults.js (separate file);
 // const AutocompleteSearchResults = () => {} <- another way to write component
 // function AutocompleteSearchResults({ results }) { <- destructure props directly in parameter
